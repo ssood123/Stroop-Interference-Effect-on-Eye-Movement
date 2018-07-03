@@ -35,7 +35,8 @@ shuffler = shuffler(randperm(length(shuffler)));
 %DISPLAYS INITIAL FIXATION POINT
 Screen(window,'TextFont','Arial');
 Screen(window,'TextSize',300);
-Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
+Screen('FillRect', window, [0 0 0]);
+Screen('FillOval', window , [0 0 0], [window_size(3)/2-40,window_size(4)/2-40,window_size(3)/2+40,window_size(4)/2+40]);
 Screen('Flip',window);
 WaitSecs(1);
 
@@ -72,7 +73,7 @@ for i = shuffler
         correctanswer = 0;
     end
     fprintf(fid,'%s %s %f %d\n',word,color,time,correctanswer);
-    Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
+    Screen('FillOval', window , [0 0 0], [window_size(3)/2-40,window_size(4)/2-40,window_size(3)/2+40,window_size(4)/2+40]);
     Screen('Flip',window);
     WaitSecs(1);
 end
@@ -115,7 +116,7 @@ for i = 1:6
         correctanswer = 0;
     end
     fprintf(fid,'%s %s %f %d\n',word,color,time,correctanswer);
-    Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
+    Screen('FillOval', window , [0 0 0], [window_size(3)/2-40,window_size(4)/2-40,window_size(3)/2+40,window_size(4)/2+40]);
     Screen('Flip',window);
     WaitSecs(1);
  end

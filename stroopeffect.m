@@ -27,6 +27,7 @@ for i = 1:2
     Screen('Flip',window);
     WaitSecs(.2);
     [secs, keyCode, deltaSecs] = KbWait;
+    answer = 0;
     if keyCode(21) == 1
         answer = [255 0 0];
     elseif keyCode(18) == 1
@@ -46,8 +47,9 @@ for i = 1:2
         correctanswerslist1(end+1) = 0;
     end
     timeslist1(end+1) = deltaSecs;
-    for j = 1:2
-        DrawFormattedText(window,times{j},'center', 'center', [0 0 0],[],[],[],2);
+    for j = 1:1
+        %DrawFormattedText(window,times{j},window_size(3)/2, window_size(4)/2+50, [0 0 0],[],[],[],2);
+        Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
         Screen('Flip',window);
         WaitSecs(1);
     end
@@ -88,8 +90,10 @@ for i = 1:2
         correctanswerslist2(end+1) = 0;
     end
     timeslist2(end+1) = deltaSecs;
-    for j = 1:2
-        DrawFormattedText(window,times{j},'center', 'center', [0 0 0],[],[],[],2);
+    for j = 1:1
+        %DrawFormattedText(window,times{j},'center', 'center'-50, [0 0 0],[],[],[],2);
+        %DrawFormattedText(window,times{j},window_size(3)/2, window_size(4)/2+50, [0 0 0],[],[],[],2);
+        Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
         Screen('Flip',window);
         WaitSecs(1);
     end

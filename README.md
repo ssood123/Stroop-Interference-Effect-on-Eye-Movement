@@ -1,2 +1,2 @@
 # Stroop-Interference-Effect-on-Eye-Movement
-The program measures how Stroop Interference affects eye movement (saccades)
+The goal of this program is to see how eye movement (saccades) when showing words of the color of the rainbow with their congruent color (for example, an orange word with an orange color is displayed) differs from that when showing words of the color of the rainbow with an incongruent color (for example, an orange word with a green color is displayed). We predict that saccades will be greater when words with incongruent colors are shown because the brain has to process more.   

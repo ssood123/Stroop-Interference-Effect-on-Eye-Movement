@@ -16,6 +16,8 @@ correctanswerslist1 = [];
 correctanswerslist2 = [];
 timeslist1 = [];
 timeslist2 = [];
+colorslist = {};
+wordslist = {};
 
 %DISPLAYS EACH WORD AND ITS OWN COLOR
 for i = 1:2
@@ -23,12 +25,14 @@ for i = 1:2
     Screen(window,'TextSize',300);
     word = randomColors{i};
     color = randomColors2{i};
+    wordslist{end+1} = word;
+    colorslist{end+1} = randomColors{i};
     DrawFormattedText(window, word,'center', 'center', color,[],[],[],2);
     Screen('Flip',window);
     WaitSecs(.2);
     [secs, keyCode, deltaSecs] = KbWait;
     answer = 0;
-    if keyCode(21) == 1
+     if keyCode(21) == 1
         answer = [255 0 0];
     elseif keyCode(18) == 1
         answer = [255 165 0];
@@ -41,6 +45,7 @@ for i = 1:2
     elseif keyCode(19) == 1
         answer = [75 0 130];
     end
+
     if isequal(answer,color)
         correctanswerslist1(end+1) = 1;
     else
@@ -67,6 +72,8 @@ for i = 1:2
     Screen(window,'TextSize',300);
     word = randomColors{pickone};
     color = randomColors2{pickanother};
+    wordslist{end+1} = word;
+    colorslist{end+1} = randomColors{pickanother};
     DrawFormattedText(window, word,'center', 'center', color,[],[],[],2);
     Screen('Flip',window);
     WaitSecs(.2);
@@ -84,6 +91,7 @@ for i = 1:2
     elseif keyCode(19) == 1
         answer = [75 0 130];
     end
+
     if isequal(answer,color)
         correctanswerslist2(end+1) = 1;
     else
@@ -98,5 +106,16 @@ for i = 1:2
         WaitSecs(1);
     end
 end
- 
+
 Screen('CloseAll');
+correctanswerslist = [correctanswerslist1 correctanswerslist2];
+timeslist = [timeslist1 timeslist2];
+nameoffile = input('Enter your info in this format: lastnamefirstname: ','s');
+nameoffile = strtrim(nameoffile);
+nameoffile = strcat(nameoffile,'.dat');
+fid = fopen(nameoffile,'w');
+for i = 1:length(colorslist)
+    fprintf(fid,'%s %s %f %d\n',wordslist{i},colorslist{i},timeslist(i),correctanswerslist(i));
+end
+fclose(fid);
+

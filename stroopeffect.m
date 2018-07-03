@@ -2,23 +2,23 @@
 clc;
 clear all;
 close all;
+    %FILE MAKING
+    last = input('Enter your last name: ','s');
+    last = strtrim(last);
+    first = input('Enter your first name: ','s');
+    first = strtrim(first);
+    t = datetime;
+    DateString = datestr(t);
+    [DateString, ~] = strtok(DateString);
+    nameoffile = strcat(last,first);
+    nameoffile = strcat(nameoffile,DateString);
+    nameoffile = strcat(nameoffile,'.dat');
+    fid = fopen(nameoffile,'w');
 rng('shuffle');
 Screen('Preference', 'SkipSyncTests', 2);
 Screen('Preference','VisualDebugLevel', 1);
 [window, window_size] = Screen('OpenWindow', 0, [255 255 255], [],32,2);
 
-%FILE MAKING
-last = input('Enter your last name: ','s');
-last = strtrim(last);
-first = input('Enter your first name: ','s');
-first = strtrim(first);
-t = datetime;
-DateString = datestr(t);
-[DateString, ~] = strtok(DateString);
-nameoffile = strcat(last,first);
-nameoffile = strcat(nameoffile,DateString);
-nameoffile = strcat(nameoffile,'.dat');
-fid = fopen(nameoffile,'w');
 
 %VARIABLES
 randomColors = {'Red','Orange', 'Yellow', 'Green', 'Blue', 'Purple'};
@@ -29,9 +29,18 @@ keyYellow = KbName('y');
 keyGreen = KbName('g');
 keyBlue = KbName('b');
 keyPurple = KbName('p');
+shuffler = [1 2 3 4 5 6];
+shuffler = shuffler(randperm(length(shuffler)));
+
+%DISPLAYS INITIAL FIXATION POINT
+Screen(window,'TextFont','Arial');
+Screen(window,'TextSize',300);
+Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
+Screen('Flip',window);
+WaitSecs(1);
 
 %DISPLAYS EACH WORD AND ITS OWN COLOR
-for i = 1:2
+for i = shuffler
     Screen(window,'TextFont','Arial');
     Screen(window,'TextSize',300);
     word = randomColors{i};
@@ -42,7 +51,6 @@ for i = 1:2
     WaitSecs(.2);
     tic
     [~, keyCode, ~] = KbWait;
-    toc
     time = toc;
     answer = 0;
     if keyCode(keyRed) == 1
@@ -71,7 +79,7 @@ end
     
 
 %DISPLAYS A RANDOM WORD WITH A RANDOM COLOR
-for i = 1:2
+for i = 1:6
     pickone = randi([1,6]);
     pickanother = randi([1,6]);
     while pickanother == pickone
@@ -87,7 +95,6 @@ for i = 1:2
     WaitSecs(.2);
     tic
     [~, keyCode, ~] = KbWait;
-    toc
     time = toc;
     if keyCode(keyRed) == 1
         answer = 'Red';

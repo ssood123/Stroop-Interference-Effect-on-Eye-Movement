@@ -1,8 +1,10 @@
-verystart = input('Enter start time');
+verystart = input('Enter start time: ');
 index = 1;
 timeslist = [];
 boundarystart = zeros(1,12);
 boundaryend = zeros(1,12);
+words = cell(1,12);
+colors = cell(1,12);
 currenttime = verystart;
 fid = fopen('kuangrichard03-Jul-2018.dat');
 while feof(fid) == 0
@@ -10,6 +12,8 @@ while feof(fid) == 0
     getdata = fgetl(fid);
     getdata = strsplit(getdata);
     gettime = str2double(getdata{3});
+    words{index} = getdata{1};
+    colors{index} = getdata{2};
     boundarystart(index) = currenttime;
     currenttime = currenttime + gettime * 1000;
     boundaryend(index) = currenttime;
@@ -38,8 +42,11 @@ for i = 1:12
         end
     end
     figure(i)
-    plot(lefteyex,lefteyey,'ko');
-    xlim([0 1000])
-    ylim([0 1000])
+    plot(righteyex,righteyey,'ro');
+    hold on
+    plot(lefteyex,lefteyey,'bo');
+    xlim([0 1280])
+    ylim([0 720])
+    text(640,360,words{i},'fontsize',20,'HorizontalAlignment','center');
     fclose(fid);
 end

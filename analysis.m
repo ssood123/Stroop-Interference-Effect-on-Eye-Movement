@@ -5,6 +5,7 @@ boundarystart = zeros(1,12);
 boundaryend = zeros(1,12);
 words = cell(1,12);
 colors = cell(1,12);
+colorlabel = [0 0 0];
 currenttime = verystart;
 fid = fopen('kuangrichard03-Jul-2018.dat');
 while feof(fid) == 0
@@ -41,12 +42,20 @@ for i = 1:12
             righteyey(end+1) = str2double(line{6});
         end
     end
-    figure(i)
-    plot(righteyex,righteyey,'ro');
+    hFig = figure(i);
+    set(hFig, 'Position', [0 0 1280 720])
+    plot(righteyex,righteyey,'co');
     hold on
-    plot(lefteyex,lefteyey,'bo');
+    plot(lefteyex,lefteyey,'ko');
+    if strcmp(colors{i},'Orange') == 1
+        colorslabel = [1 .5 0];
+    elseif strcmp(colors{i},'Purple') == 1
+        colorslabel = 'magenta';
+    else
+        colorslabel = lower(colors{i});
+    end
+    text(640,360,words{i},'fontsize',200,'HorizontalAlignment','center','color',colorslabel);
     xlim([0 1280])
     ylim([0 720])
-    text(640,360,words{i},'fontsize',20,'HorizontalAlignment','center');
     fclose(fid);
 end

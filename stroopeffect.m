@@ -36,7 +36,6 @@ black = BlackIndex(screenNumber);
 rng('default');
 rng('shuffle');
 
-% Screen('Preference', 'SkipSyncTests', 2);
 Screen('Preference','VisualDebugLevel', 1);
 [window, window_size] = Screen('OpenWindow', 0, [255 255 255], [],32,2);
 Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
@@ -54,9 +53,6 @@ keyBlue = KbName('b');
 keyPurple = KbName('p');
 shuffler = [1 2 3 4 5 6];
 shuffler = shuffler(randperm(length(shuffler)));
-
-%start = GetSecs; %new stuff
-
 el=EyelinkInitDefaults(window);
 if ~EyelinkInit(dummymode, 1)
     fprintf('Eyelink Init aborted.\n');
@@ -76,14 +72,11 @@ if Eyelink('IsConnected')~=1 && dummymode
         cleanup;
         return;
 end
-
-
 Eyelink('command', 'add_file_preamble_text ''Recorded by EyelinkToolbox demo-experiment''');
 Eyelink('command', 'file_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON,INPUT');
 Eyelink('command', 'file_sample_data  = LEFT,RIGHT,GAZE,HREF,AREA,GAZERES,STATUS,INPUT,HTARGET');
 Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON,INPUT,FIXUPDATE');
 Eyelink('command', 'link_sample_data  = LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS,INPUT,HTARGET');
-
 Eyelink('command', 'select_eye_after_validation = NO');
 EyelinkUpdateDefaults(el);
 HideCursor;
@@ -100,34 +93,11 @@ KbStrokeWait;
     % clear tracker display and draw box at center
     Eyelink('Command', 'clear_screen %d', 0);
 Eyelink('message', 'SYNCTIME')
-%Eyelink('message', ['NEWTRIAL',' ',num2str((h))]);
 EyelinkDoDriftCorrection(el);
 WaitSecs(0.1);
     Eyelink('StartRecording');
     WaitSecs(0.1);
-%     
-%   if Eyelink('IsConnected')~=1 && ~dummymode
-%         
-%         cleanup;
-%         return;
-%   end
-    
-% Screen('FillRect', window, black);
-% Eyelink('message', ['NEWTRIAL',' ',num2str((h))]);
-% Eyelink('startrecording');
 
-%             Eyelink('message', ['NO_RECORD',' ',num2str((p))]);
-% 
-%  Screen('DrawDots', window, [xPosVector ; yPosVector ],...
-%                 dotSizes2, grey, dotCenter, 0); %ORIGINAL DRAWDOTS
-% 
-%             Eyelink('message', ['RESUME_MOTION',' ',num2str((r))]);
-% 
-%         Screen('DrawDots', window, [xPosVector; yPosVector ],...
-%             dotSizes2, grey, dotCenter, 0);
-% 
-%             Eyelink('message', ['FREEZE',' ',num2str((f))]);
-            
 %DISPLAYS INITIAL FIXATION POINT
 Screen(window,'TextFont','Arial');
 Screen(window,'TextSize',300);
@@ -136,6 +106,7 @@ Screen('Flip',window);
 WaitSecs(1);
 
 %DISPLAYS EACH WORD AND ITS OWN COLOR
+universal_index = 1;
 for i = shuffler
     Screen(window,'TextFont','Arial');
     Screen(window,'TextSize',200);
@@ -144,38 +115,11 @@ for i = shuffler
     DrawFormattedText(window, word,'center', 'center', color,[],[],[],2);
     color = randomColors{i};
     Screen('Flip',window);
-    switch i
-        case 1
-            Eyelink('message', 'C-Test RED RED');
-        case 2
-            Eyelink('message', 'C-Test ORANGE ORANGE');
-        case 3
-            Eyelink('message', 'C-Test YELLOW YELLOW');
-        case 4
-            Eyelink('message', 'C-Test GREEN GREEN');
-        case 5
-            Eyelink('message', 'C-Test BLUE BLUE');
-        case 6
-            Eyelink('message', 'C-Test PURPLE PURPLE');
-    end
-            %WaitSecs(.2);
+    Eyelink('message',strcat('C-Test',num2str(universal_index)));
     tic
     [~, keyCode, ~] = KbWait;
     time = toc;
-    switch i
-        case 1
-            Eyelink('message', 'EC-Test RED RED');
-        case 2
-            Eyelink('message', 'EC-Test ORANGE ORANGE');
-        case 3
-            Eyelink('message', 'EC-Test YELLOW YELLOW');
-        case 4
-            Eyelink('message', 'EC-Test GREEN GREEN');
-        case 5
-            Eyelink('message', 'EC-Test BLUE BLUE');
-        case 6
-            Eyelink('message', 'EC-Test PURPLE PURPLE');
-    end
+    Eyelink('message',strcat('EC-Test',num2str(universal_index)));
     answer = 0;
     if keyCode(keyRed) == 1
         answer = 'Red';
@@ -199,6 +143,7 @@ for i = shuffler
     Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
     Screen('Flip',window);
     WaitSecs(1);
+    universal_index = universal_index + 1;
 end
     
 
@@ -216,14 +161,11 @@ for i = 1:6
     DrawFormattedText(window, word,'center', 'center', color,[],[],[],2);
     color = randomColors{pickanother};
     Screen('Flip',window);
-    text = ['I-Test' ' ' upper(word) ' ' upper(color)];
-    Eyelink('message', text);
-    %WaitSecs(.2);
+    Eyelink('message',strcat('I-Test',num2str(i)));
     tic
     [~, keyCode, ~] = KbWait;
     time = toc;
-    text = ['EI-Test' ' ' upper(word) ' ' upper(color)];
-    Eyelink('message', text);
+    Eyelink('message',strcat('EI-Test',num2str(i)));
     if keyCode(keyRed) == 1
         answer = 'Red';
     elseif keyCode(keyOrange) == 1
@@ -250,9 +192,6 @@ end
  
         error = Eyelink('checkrecording');
         [keyIsDown, secs, keyCode] = KbCheck;
-%         if keyCode(stopKey)
-%             break;
-%         end
         if Eyelink('isconnected') == el.dummyconnected
             [x,y,button] = GetMouse(window);
             evt.type=el.ENDSACC;
@@ -274,11 +213,9 @@ end
         end
         Eyelink('StopRecording');
         Eyelink('message', 'TRIALOK');
-        %EyelinkDoDriftCorrection(el);
 %end %for while loop
     Eyelink('ReceiveFile');
     Eyelink('CloseFile');
-    %Screen(window, 'close');
 catch error
     fprintf('%s\n', error.message);
     

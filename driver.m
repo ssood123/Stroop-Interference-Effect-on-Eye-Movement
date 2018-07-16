@@ -30,7 +30,7 @@ for a = 1:6
         break;
     end
   end
-  
+  b = a;
   analysis
 end
 
@@ -54,5 +54,6 @@ for a = 1:6
     end
   end
   
-  analysis2
+  b=a+6;
+  analysis
 end

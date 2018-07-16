@@ -155,6 +155,7 @@ if ~isempty(FixPosR)
     plot(str2double(FixPosR(:, 1)), str2double(FixPosR(:, 2)), 'go')
 end
 hold on
+
 if ~isempty(SaccPosR)
     plot(str2double(SaccPosR(:, 1)), str2double(SaccPosR(:, 2)), 'ro')
 end

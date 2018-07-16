@@ -119,28 +119,33 @@ numDIS = size(durDIS, 1);
 
 alldata = [left_data right_data num2cell(special_types)];
 
-hold off
-hold on
-axis([0 1280 0 720])
-figure(1)
-if ~isempty(BlinkPosL)
-    plot(str2double(BlinkPosL(:, 1)), str2double(BlinkPosL(:, 2)), 'ko')
+figure(b)
+fiddat = fopen(dat);
+for i = 1:b
+    displaycolor = strsplit(fgetl(fiddat));
 end
-hold on
-if ~isempty(endsPosL)
-    plot(str2double(endsPosL(:, 1)), str2double(endsPosL(:, 2)), 'bo')
-end
-hold on
-if ~isempty(FixPosL)
-    plot(str2double(FixPosL(:, 1)), str2double(FixPosL(:, 2)), 'go')
-end
-hold on
-if ~isempty(SaccPosL)
-    plot(str2double(SaccPosL(:, 1)), str2double(SaccPosL(:, 2)), 'ro')
+displaycolor = displaycolor{1};
+if strcmp(displaycolor,'Red')
+    knownimage = imread('Screenshot_red_grey.jpg');
+    image(knownimage)
+elseif strcmp(displaycolor,'Orange')
+    knownimage = imread('Screenshot_orange_grey.jpg');
+    image(knownimage)
+elseif strcmp(displaycolor,'Yellow')
+    knownimage = imread('Screenshot_yellow_grey.jpg');
+    image(knownimage)
+elseif strcmp(displaycolor,'Green')
+    knownimage = imread('Screenshot_green_grey.jpg');
+    image(knownimage)
+elseif strcmp(displaycolor,'Blue')
+    knownimage = imread('Screenshot_blue_grey.jpg');
+    image(knownimage)
+elseif strcmp(displaycolor,'Purple')
+    knownimage = imread('Screenshot_purple_grey.jpg');
+    image(knownimage)
 end
 
 hold off
-figure(a)
 hold on
 axis([0 1280 0 720])
 if ~isempty(BlinkPosR)

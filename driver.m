@@ -3,6 +3,8 @@ clear;
 
 file = input('name of session list-->', 's');
 fid = fopen([file '.asc']);
+dat = input('Enter the name of the .dat file: ','s');
+dat = [dat '.dat'];
 
 line_count = 1;
 while feof(fid) == 0
@@ -31,7 +33,7 @@ for a = 1:6
     end
   end
   b = a;
-  analysis
+  Stroop_Analysis2
 end
 
 for a = 1:6
@@ -55,5 +57,5 @@ for a = 1:6
   end
   
   b=a+6;
-  analysis
+  Stroop_Analysis2
 end

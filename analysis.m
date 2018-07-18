@@ -2,7 +2,6 @@ left_data = [];
 right_data = [];
 special_types = [];
 trial_breaks = [];
-
 current_type = 0;
 startSacLeft = [];
 startSacRight = [];

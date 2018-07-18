@@ -120,10 +120,18 @@ numDIS = size(durDIS, 1);
 alldata = [left_data right_data num2cell(special_types)];
 
 figure(b)
-fiddat = fopen(dat);
+if b <= 6
+fiddat = fopen(datc);
 for i = 1:b
     displaycolor = strsplit(fgetl(fiddat));
 end
+elseif b > 6 
+fiddat = fopen(dati);
+for i = 1:b-6
+    displaycolor = strsplit(fgetl(fiddat));
+end
+end
+titlecolor = displaycolor;
 displaycolor = displaycolor{1};
 if strcmp(displaycolor,'Red')
     knownimage = imread('Screenshot_red_grey.jpg');
@@ -163,3 +171,6 @@ hold on
 if ~isempty(SaccPosR)
     plot(str2double(SaccPosR(:, 1)), str2double(SaccPosR(:, 2)), 'ro')
 end
+title(strcat(titlecolor{1},titlecolor{2}));
+fclose(fiddat);
+

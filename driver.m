@@ -3,8 +3,10 @@ clear;
 
 file = input('name of session list-->', 's');
 fid = fopen([file '.asc']);
-dat = input('Enter the name of the .dat file: ','s');
-dat = [dat '.dat'];
+datc = input('Enter the name of the congruent .dat file: ','s');
+datc = [datc '.dat'];
+dati = input('Enter the name of the incongruent .dat file: ','s');
+dati = [dati '.dat'];
 
 line_count = 1;
 while feof(fid) == 0
@@ -14,48 +16,48 @@ end
 line_count = line_count-1;
 
 for a = 1:6
-  start_index = 1;
-  end_index = 1;
-  
-  for index = 1:line_count
-    str = strfind(line_data(index), strcat('C-Test',num2str(a)));
-    if ~isempty(str{1})
-        start_index = index;
-        break;
+    start_index = 1;
+    end_index = 1;
+    
+    for index = 1:line_count
+        str = strfind(line_data(index), strcat('C-Test',num2str(a)));
+        if ~isempty(str{1})
+            start_index = index;
+            break;
+        end
     end
-  end
-  
-  for index = 1:line_count
-    str = strfind(line_data(index), strcat('EC-Test',num2str(a)));
-    if ~isempty(str{1})
-        end_index = index;
-        break;
+    
+    for index = 1:line_count
+        str = strfind(line_data(index), strcat('EC-Test',num2str(a)));
+        if ~isempty(str{1})
+            end_index = index;
+            break;
+        end
     end
-  end
-  b = a;
-  Stroop_Analysis2
+    b = a;
+    Stroop_Analysis2
 end
 
 for a = 1:6
     start_index = 1;
-  end_index = 1;
-  
-  for index = 1:line_count
-    str = strfind(line_data(index), strcat('I-Test',num2str(a)));
-    if ~isempty(str{1})
-        start_index = index;
-        break;
+    end_index = 1;
+    
+    for index = 1:line_count
+        str = strfind(line_data(index), strcat('I-Test',num2str(a)));
+        if ~isempty(str{1})
+            start_index = index;
+            break;
+        end
     end
-  end
-  
-  for index = 1:line_count
-    str = strfind(line_data(index), strcat('EI-Test',num2str(a)));
-    if ~isempty(str{1})
-        end_index = index;
-        break;
+    
+    for index = 1:line_count
+        str = strfind(line_data(index), strcat('EI-Test',num2str(a)));
+        if ~isempty(str{1})
+            end_index = index;
+            break;
+        end
     end
-  end
-  
-  b=a+6;
-  Stroop_Analysis2
+    
+    b=a+6;
+    Stroop_Analysis2
 end

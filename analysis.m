@@ -2,6 +2,7 @@ left_data = [];
 right_data = [];
 special_types = [];
 trial_breaks = [];
+
 current_type = 0;
 startSacLeft = [];
 startSacRight = [];
@@ -119,14 +120,14 @@ numDIS = size(durDIS, 1);
 alldata = [left_data right_data num2cell(special_types)];
 
 figure(b)
-if b <= 6
+if b <= numberofstimuli/2
 fiddat = fopen(datc);
 for i = 1:b
     displaycolor = strsplit(fgetl(fiddat));
 end
-elseif b > 6 
+elseif b > numberofstimuli/2 
 fiddat = fopen(dati);
-for i = 1:b-6
+for i = 1:b-numberofstimuli/2
     displaycolor = strsplit(fgetl(fiddat));
 end
 end

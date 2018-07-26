@@ -15,8 +15,10 @@ try
     nameoffile = strcat(nameoffile,DateString);
     nameoffile1 = strcat(nameoffile,'c.dat');
     nameoffile2 = strcat(nameoffile,'i.dat');
+    nameoffile = strcat(nameoffile,'.dat');
     fid1 = fopen(nameoffile1,'w');
     fid2 = fopen(nameoffile2,'w');
+    fid = fopen(nameoffile,'w');
     commandwindow;
     dummymode = 0;
     PsychDefaultSetup(2);
@@ -55,7 +57,8 @@ try
     keyGreen = KbName('g');
     keyBlue = KbName('b');
     keyPurple = KbName('p');
-    shuffler = repmat([1 2],6);
+    numberofstimuli = 300;
+    shuffler = repmat([1 2],numberofstimuli/2);
     shuffler = shuffler(randperm(length(shuffler)));
     congruent_index = 1;
     incongruent_index = 1;
@@ -150,6 +153,7 @@ try
             end
             congruent_index = congruent_index + 1;
             fprintf(fid1,'%s %s %f %d\n',word,color,time,correctanswer);
+            fprintf(fid,'%s %s %f %d\n',word,color,time,correctanswer);
             Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
             Screen('Flip',window);
             WaitSecs(1);
@@ -189,6 +193,7 @@ try
             end
             incongruent_index = incongruent_index + 1;
             fprintf(fid2,'%s %s %f %d\n',word,color,time,correctanswer);
+            fprintf(fid,'%s %s %f %d\n',word,color,time,correctanswer);
             Screen('FillOval', window , [0 0 0], [1280/2-40,720/2-40,1280/2+40,720/2+40]);
             Screen('Flip',window);
             WaitSecs(1);
@@ -233,3 +238,5 @@ end
 Screen('CloseAll');
 fclose(fid1);
 fclose(fid2);
+fclose(fid);
+

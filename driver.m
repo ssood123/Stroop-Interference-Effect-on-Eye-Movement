@@ -1,6 +1,3 @@
-clc;
-clear;
-
 file = input('name of session list-->', 's');
 fid = fopen([file '.asc']);
 datc = input('Enter the name of the congruent .dat file: ','s');
@@ -15,7 +12,7 @@ while feof(fid) == 0
 end
 line_count = line_count-1;
 
-for a = 1:6
+for a = 1:numberofstimuli/2
     start_index = 1;
     end_index = 1;
     
@@ -35,10 +32,10 @@ for a = 1:6
         end
     end
     b = a;
-    Stroop_Analysis2
+    analysis
 end
 
-for a = 1:6
+for a = 1:numberofstimuli/2
     start_index = 1;
     end_index = 1;
     
@@ -58,6 +55,8 @@ for a = 1:6
         end
     end
     
-    b=a+6;
-    Stroop_Analysis2
+    b=a+numberofstimuli/2;
+    analysis
 end
+
+

@@ -1,3 +1,31 @@
+congruentfigures = [];
+incongruentfigures = [];
+numberofstimuli = input('Enter the number of figures shown in the experiment: ');
+coupleorrange =input('Enter 1 to generate a selection of figures or enter 2 to generate a range of figures: ');
+if coupleorrange == 1
+    NumberOfFiguresToGenerate = input('How many figures do you want to create? ');
+    for i = 1:NumberOfFiguresToGenerate
+        figurenumber = input(['Enter figure' ' ' int2str(i) ': ']);
+        if figurenumber <= numberofstimuli/2
+            congruentfigures(end+1) = figurenumber;
+        else
+            incongruentfigures(end+1) = figurenumber;
+        end
+    end
+else
+    StartingFigure = input('Enter the starting figure: ');
+    EndingFigure = input('Enter the ending figure: ');
+    for i = StartingFigure:EndingFigure
+        if i <= numberofstimuli/2
+            congruentfigures(end+1) = i;
+        else
+            incongruentfigures(end+1) = i;
+        end
+    end
+end
+
+initials = input('Enter the test subject''s initials: ','s');
+
 file = input('name of session list-->', 's');
 fid = fopen([file '.asc']);
 datc = input('Enter the name of the congruent .dat file: ','s');
@@ -12,7 +40,7 @@ while feof(fid) == 0
 end
 line_count = line_count-1;
 
-for a = 1:numberofstimuli/2
+for a = congruentfigures
     start_index = 1;
     end_index = 1;
     
@@ -32,10 +60,11 @@ for a = 1:numberofstimuli/2
         end
     end
     b = a;
-    analysis
+    Stroop_Analysis2
 end
 
-for a = 1:numberofstimuli/2
+for a = incongruentfigures
+    a = a-150;
     start_index = 1;
     end_index = 1;
     
@@ -56,7 +85,13 @@ for a = 1:numberofstimuli/2
     end
     
     b=a+numberofstimuli/2;
-    analysis
+    Stroop_Analysis2
 end
 
+for i = congruentfigures
+    saveas(figure(i),strcat('Figure',num2str(i),initials),'jpg')
+end
+for i = incongruentfigures
+    saveas(figure(i),strcat('Figure',num2str(i),initials),'jpg')
+end
 

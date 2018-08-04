@@ -60,7 +60,7 @@ for a = congruentfigures
         end
     end
     b = a;
-    Stroop_Analysis2
+    analysis
 end
 
 for a = incongruentfigures
@@ -85,7 +85,7 @@ for a = incongruentfigures
     end
     
     b=a+numberofstimuli/2;
-    Stroop_Analysis2
+    analysis
 end
 
 for i = congruentfigures

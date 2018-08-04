@@ -1,12 +1,51 @@
-# Stroop-Interference-Effect-on-Eye-Movement-Experiment
-The goal of this experiment is to see how eye movement (saccades) when showing words of the color of the rainbow with their congruent color (for example, an orange word with an orange color is displayed) differs from that when showing words of the color of the rainbow with an incongruent color (for example, an orange word with a green color is displayed). We predict that saccades will be greater and more erratic when words with incongruent colors are shown because the brain has to process more. 
-We will test our hypothesis by running our matlab programs. 
+Wikipedia states, “the Stroop effect is a demonstration of interference in the reaction time of a task. When the name of a color (e.g., "blue", "green", or "red") is printed in a color which is not denoted by the name (i.e., the word "red" printed in blue ink instead of red ink), naming the color of the word takes longer and is more prone to errors than when the color of the ink matches the name of the color.” When the name of a color is printed in a color which is denoted by the name, we refer to it as a congruent stimuli. Otherwise, when the name of a color is printed in a color which is NOT denoted by the name, we refer to it as an incongruent stimuli.
 
-Our first program, stroopeffect.m, is the actual experiment. For 300 iterations, it shows either a random word with its congruent color or a random word with an incongruent color. The program records the word and color of the word in two tables (.dat files). Words with congruent colors are shown in the first .dat file and words with incongruent colors are shown in the second .dat file. Right after each word and color display, the user is required to press the right key (the user has to press a key corresponding to the color of the word (for example, the right key when red with an orange color is displayed is 'o')) but the program will take any key input. This is where additional data is recorded. The program records the user's reaction time (the time it takes for the user to press a key right after a word and color display) and whether the user pressed the right key or not. Right after the user presses a key, a central black dot (called a fixation point) is shown for one second to stabilize the eye movements of the user for the next word and color display. Throughout the program, we will use an eye tracker to record the movements of the eye movements of the user.The eye tracker gives and EDF file which is converted to an .asc file. The .asc file contains the time of recording in column one, the x position of the left eye in column two, the y position of the left eye in column three, the x position of the right eye in column five, and the y position of the right eye in column six. We want to graph the eye movements during the times in between when the word and color displays happen and when the user presses a key. stroopeffect.m determines these time intervals by putting markers in the .asc corresponding to the time a word and color display shows and the time when the user presses a key after the word and color display shows for each of the 300 word and color displays.
+In our experiment, we aim to see record eye movements (saccades) when showing a test subject congruent and incongruent stimuli. We predict that saccades will be greater and more erratic when the test subject is shown incongruent stimuli as opposed to congruent stimuli because the brain has more to process. We will test our hypothesis by showing a random mix of 150 congruent stimuli and 150 incongruent and compiling the graphs of the test subject’s eye movements for each stimuli in the order the stimuli are shown 
 
-Our analysis of the eye movements is done our three other programs: driver.m and analysis.m. analysis.m is responsible for graphing the saccades, pursuits and blinks for any congruent or incongruent color and word displays for the right eye. driver.m is overarching and is responsible for graphing 300 figures (150 for the congurent colors and 150 for the incongruent colors). Even though word and congruent color displays and word and incongruent color displays are randomized, driver.m still ensures that the first 150 plots correspond to the congruent color displays by using the first .dat file and the second 150 plots correspond to the incongruent color displays by using the second .dat file. It does this by searching for the specific markers in the .asc file and graphing data for the time interval determined by the markers. In addition, a gray word (the word depends on the specific word of the word and the color display associated with the graph) appears in the background. This word looks exactly the same as how the word and color display looked during when it was shown in stroopeffect.m except for the color. Essentially, we are trying to plot eye movements over the exact stimuli shown during stroopeffect.m since this will help us determine where the user's eyes are in relation to the stimuli. Also, the plots are titled with the word and color of the word - for example, 'GreenBlue'. Since there are 2 markers for each word and color display and 300 word and color displays, 300 plots are created. driver.m calls analysis.m to make the graphs. 
+Our first program, stroopeffect.m, is the actual experiment. Although the real program shows 300 stimuli, we will assume four as an example. Here is an example of how the program functions:
 
-Since driver.m shows the figures such that the first 150 congruent ones are shown followed by 150 incongruent ones, arrange.m arranges the figures (after they are created by driver.m and analysis.m) in chronological order (the order of the stimuli shown in stroopeffect.m) using the chronological .dat file. In case we don't want to first generate the plots/figures then order them (as it takes a very long time to do so), arrange2.m shows what the order of the figures should be before we have to create even one figure. As a result, we can generate a small fraction of the figures then place them in the right order using the results of this program, similar to insertion sort.
+-The program shows a central dot (called a fixation point) for 1 second to stabilize eye movements.
+-The program shows a centered ‘Red’ where each letter has a blue color (an incongruent stimuli).
+-The program waits until the user presses any key. The user is supposed to press the key corresponding to the COLOR of the word (‘b’ for blue, in this case), but the program accepts any key press.
+-The program shows a fixation point for 1 second.
+-The program shows a centered ‘Green’ where each letter has a green color (a congruent stimuli).
+-The program waits until the user presses any key.
+-The program shows a fixation point for 1 second.
+-The program shows a centered ‘Orange’ where each letter has an orange color (a congruent stimuli).
+-The program waits until the user presses any key.
+-The program shows a fixation point for 1 second.
+-The program shows a centered ‘Purple’ where each letter has a yellow color (an incongruent stimuli).
+-The program shows a fixation point for 1 second.
 
-Hopefully, we will see how the eye tracker's recordings differ when words with congruent colors are shown and when words with incongruent colors are shown. 
- 
+
+Of course, data is recorded throughout the program. First, the user’s eye movements are recorded, and this data will be used to create graphs later on. Second, data for each stimuli is recorded in a .dat file. Each row corresponds to the stimuli shown in chronological order. This is called the chronological .dat file. The first column corresponds to the word stimuli itself, the second column corresponds to the color of the word stimuli, the third column corresponds to the reaction time (defined as the time it takes for the user to press a key right after a stimuli is shown) in seconds, and the fourth column corresponds to whether the user pressed the right key or not (0 for right, 1 for wrong).
+Here is what the .dat file might look like (continuing with the previous example):  
+
+Row 1:  Red  Blue  1.27  0
+Row 2:  Green  Green  .75  1
+Row 3:  Orange  Orange .87  1
+Row 4:  Purple  Yellow  1.80  1
+
+We also create two more .dat files. Both .dat files still have the stimuli in chronological order, but 1 only has the congruent stimuli (called the chronological .dat file) and 1 only has the incongruent stimuli (called the incongruent .dat file). Here is what the congruent .dat file looks like:
+
+Row 1:  Green  Green  .75  1
+Row 2:  Orange  Orange  .87  1
+
+Here is what the incongruent .dat file looks like:
+
+Row 1:  Red  Blue  1.27  0
+Row 4:  Purple  Yellow  1.80  1
+
+After stroopeffect.m is finished, we use driver.m next. In general, this program is tasked with prompting the user to enter the figure number(s) to be generated, generating said figures, then saving them to a specific directory. The figure numbers aren’t what one would expect, however. Since 4 stimuli are shown in the example experiment, the first 2 figures correspond to the congruent stimuli and the last 2 correspond to the incongruent stimuli. Here is a modified chronological .dat file showing the figure numbers for each stimuli:
+Row 1:  Red  Blue  1.27  0  (Figure 3)
+Row 2:  Green  Green  .75  1  (Figure 1)
+Row 3:  Orange  Orange .87  1  (Figure 2)
+Row 4:  Purple  Yellow  1.80  1  (Figure 4)
+
+This means figure 3 graphs the eye movement data for the Red Blue stimuli and so on.
+
+Here is how each figure is generated. As stated before, stroopeffect.m records eye movements during the experiment. It does this in an .asc file. Since stroopeffect.m puts specific markers in the .asc file, driver.m knows how to graph the right data for each stimuli. Using the Red Blue stimuli as an example, driver.m graphs the eye movement data for the time period between when the Red Blue stimuli is shown and when the user presses a key. Each figure has the word and color as the tile and the plots. In addition, the figures have a gray word in the background that looks exactly how the stimulus looked in the experiment save for the color. Essentially, we are trying to plot eye movements over the exact stimuli shown during stroopeffect.m since this will help us determine where the user's eyes are in relation to the stimuli. Using the Red Blue stimuli as an example again, the title for the figure corresponding to this stimuli would be ‘RedBlue’ and there would be a gray ‘Red’ in the background of the plot with the eye movement graphs superimposed. 
+
+After we use this program to generate all the figures and they are saved in our directory, we use arrange.m. In general, this program is responsible for determining the correct chronological order of the figures. The figures in are directory would be stored as figure 1, figure 2, figure 3, and figure 4, but this is not the correct chronological order. Arrange.m determines the correct order to be figure 3, figure 1, figure 2, and figure 4 using the three .dat files made in stroopeffect.m. After creating a vector with the correct chronological order of the figures, arrange.m creates a python list with the same data as the vector that can be copied and pasted into a python script.
+
+makepdf.py, the python script, is in the same directory as the figures that are saved. It is responsible for using the list generated by arrange.m to put the figures in a word document in the correct chronological order. 
